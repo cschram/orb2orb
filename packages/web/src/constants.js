@@ -31,46 +31,46 @@ export const commonCurrencies = [
     "Master Cartographer's Sextant"
 ];
 
-export const breachCurrencies = [
-    "Blessing of Chayula",
-    "Blessing of Esh",
-    "Blessing of Tul",
-    "Blessing of Uul-Netol",
-    "Blessing of Xoph",
-    "Chayula's Breachstone",
-    "Esh's Breachstone",
-    "Tul's Breachstone",
-    "Uul-Netol's Breachstone",
-    "Xoph's Breachstone",
-    "Splinter of Chayula",
-    "Splinter of Esh",
-    "Splinter of Tul",
-    "Splinter of Uul-Netol",
-    "Splinter of Xoph"
-];
-
 export const mapCurrencies = [
-    "Mortal Grief",
-    "Mortal Hope",
-    "Mortal Ignorance",
-    "Mortal Rage",
     "Offering to the Goddess",
-    "Sacrifice at Dawn",
+    "Divine Vessel",
+    "Mortal Grief",
+    "Mortal Rage",
+    "Mortal Ignorance",
+    "Mortal Hope",
     "Sacrifice at Dusk",
     "Sacrifice at Midnight",
     "Sacrifice at Noon",
+    "Sacrifice at Dawn",
+    "Volkuur's Key",
     "Eber's Key",
     "Inya's Key",
-    "Volkuur's Key",
     "Yriel's Key",
-    "Fragment of the Chimera",
     "Fragment of the Hydra",
-    "Fragment of the Minotaur",
     "Fragment of the Phoenix",
-    "Divine Vessel"
+    "Fragment of the Chimera",
+    "Fragment of the Minotaur"
 ];
 
-export const currencies = commonCurrencies.concat(breachCurrencies).concat(mapCurrencies);
+export const breachCurrencies = [
+    "Blessing of Chayula",
+    "Blessing of Uul-Netol",
+    "Blessing of Esh",
+    "Blessing of Tul",
+    "Blessing of Xoph",
+    "Chayula's Breachstone",
+    "Uul-Netol's Breachstone",
+    "Esh's Breachstone",
+    "Tul's Breachstone",
+    "Xoph's Breachstone",
+    "Splinter of Chayula",
+    "Splinter of Uul-Netol",
+    "Splinter of Esh",
+    "Splinter of Tul",
+    "Splinter of Xoph"
+];
+
+export const currencies = commonCurrencies.concat(mapCurrencies).concat(breachCurrencies);
 
 export const thumbnails = {
     "Chaos Orb": "http://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png?scale=1&w=1&h=1",

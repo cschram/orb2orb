@@ -13,8 +13,16 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         let values = {};
+        let storedValues = {};
+        if (localStorage.getItem('values')) {
+            storedValues = JSON.parse(localStorage.getItem('values'));
+        }
         currencies.forEach(currency => {
-            values[currency] = 0;
+            if (storedValues[currency]) {
+                values[currency] = storedValues[currency];
+            } else {
+                values[currency] = 0;
+            }
         });
         this.state = {
             values,
@@ -22,6 +30,19 @@ export default class App extends React.Component {
             calculating: false
         };
     }
+
+    clear = () => {
+        let values = {};
+        currencies.forEach(currency => {
+            values[currency] = 0;
+        });
+        localStorage.removeItem('values');
+        this.setState({
+            values,
+            result: -1,
+            calculating: false
+        });
+    };
 
     calculate = async () => {
         this.setState({
@@ -45,17 +66,20 @@ export default class App extends React.Component {
             body: JSON.stringify(payload)
         });
         const data = await response.json();
-        this.setState({
-            values: this.state.values,
-            result: data.total,
-            calculating: false
-        });
+        if (this.state.calculating) {
+            this.setState({
+                values: this.state.values,
+                result: data.total,
+                calculating: false
+            });
+        }
     };
 
     handleChange(currency) {
         return (event) => {
             const values = this.state.values;
             values[currency] = parseInt(event.target.value, 10);
+            localStorage.setItem('values', JSON.stringify(values));
             this.setState({
                 values,
                 result: -1,
@@ -65,10 +89,13 @@ export default class App extends React.Component {
     }
 
     renderInput = (currency) => {
+        const thumbnailStyle = {
+            backgroundImage: `url(${thumbnails[currency]})`
+        };
         return (
             <li key={currency}>
                 <h5>{currency}</h5>
-                <img title={currency} src={thumbnails[currency]} />
+                <span className="thumbnail" title={currency} style={thumbnailStyle}></span>
                 <input type="number"
                        min="0"
                        step="1"
@@ -84,12 +111,13 @@ export default class App extends React.Component {
                 <header>
                     <h1>Path of Exile Currency Calculator</h1>
                     {this.state.result >= 0 ?
-                        <span className="result">Total Worth: <strong>{this.state.result} Chaos Orb(s)</strong></span> :
+                        <span className="result">Total Worth: <strong>{this.state.result.toFixed(2)} Chaos Orb(s)</strong></span> :
                         <button onClick={this.calculate}>
                             {this.state.calculating ?
                                 <span>Calculating <i className="fa fa-spinner" aria-hidden="true"></i></span> :
                                 <span>Calculate</span>}
                         </button>}
+                    <button className="clear" onClick={this.clear}>Clear</button>
                 </header>
                 <div className="input-section">
                     <h2>Common Currencies</h2>

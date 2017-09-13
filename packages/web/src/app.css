@@ -17,6 +17,7 @@ body {
     font-family: 'Open Sans', sans-serif;
     font-size: 62.5%;
     padding: 2em 0;
+    text-shadow: 1px 1px 2px #000000;
 }
 
 .fa-spinner {
@@ -28,6 +29,7 @@ body {
 
 .app {
     background: #111111;
+    border: 1px solid #444444;
     font-size: 1.5em;
     margin: 0 auto;
     padding: 1.5em;
@@ -47,6 +49,11 @@ body {
     font-size: 1.25em;
     margin-left: 0.75em;
     padding: 0.5em;
+}
+
+.clear {
+    float: right;
+    margin-right: 1.75em;
 }
 
 .result {
@@ -77,8 +84,10 @@ body {
     margin: 0 0 0.5em 0;
 }
 
-.inputs li img {
-    display: inline-block;
+.thumbnail {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
     float: left;
     height: 45px;
     width: 45px;
