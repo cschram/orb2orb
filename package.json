@@ -1,0 +1,14 @@
+{
+  "name": "orb2orb",
+  "version": "1.0.0",
+  "description": "Path of Exile Currency Calculator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Corey Schram <coreyschram@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "lerna": "^2.1.2"
+  }
+}

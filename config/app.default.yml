@@ -1,0 +1,12 @@
+api:
+  host: localhost
+  port: 9000
+general:
+  statsAPI: http://poe.ninja/api/Data
+  endpoints:
+    - GetCurrencyOverview
+    - GetFragmentOverview
+  league: Harbinger
+logs:
+  location: /var/log/orb2orb
+  level: debug

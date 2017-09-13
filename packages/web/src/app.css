@@ -1,0 +1,74 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#mount,
+.app {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background: #111111;
+    color: #a38d6d;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 62.5%;
+}
+
+.app {
+    font-size: 1.5em;
+    padding: 1em;
+}
+
+.app button {
+    background: #333333;
+    border: none;
+    border-top: 2px solid #666666;
+    color: #ffffff;
+    font-size: 1.25em;
+    padding: 0.5em;
+}
+
+.result {
+    display: inline-block;
+    font-size: 1.25em;
+    padding: 0.5em;
+}
+
+.inputs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.inputs li {
+    display: inline-block;
+    line-height: 45px;
+    margin: 1em;
+    width: 15em;
+}
+
+.inputs li h5 {
+    line-height: 1.25em;
+    margin: 0 0 0.5em 0;
+}
+
+.inputs li img {
+    display: inline-block;
+    float: left;
+    height: 45px;
+    width: 45px;
+}
+
+.inputs li input {
+    background: #000000;
+    border: 1px solid #444444;
+    color: #beb698;
+    display: inline-block;
+    height: 1.75em;
+    margin-left: 1em;
+    padding: 0 0.25em;
+    width: calc(100% - 1em - 45px);
+}
