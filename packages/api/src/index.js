@@ -25,6 +25,7 @@ async function getExchangeRates(config) {
     lines.forEach(line => {
         rates[line.currencyTypeName] = parseFloat(line.receive.value);
     });
+    rates['Chaos Orb'] = 1;
     return rates;
 }
 

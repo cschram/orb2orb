@@ -1,0 +1,10 @@
+{
+    "apps": [
+        {
+            "name": "orb2orb-api",
+            "script": "src/index.js",
+            "instances": 4,
+            "exec_mode": "cluster"
+        }
+    ]
+}

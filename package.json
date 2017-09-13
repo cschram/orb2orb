@@ -4,11 +4,12 @@
   "description": "Path of Exile Currency Calculator",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "lerna bootstrap",
+    "start": "lerna run start --parallel"
   },
   "author": "Corey Schram <coreyschram@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "lerna": "^2.1.2"
+    "lerna": "^2.0.0-rc.5"
   }
 }

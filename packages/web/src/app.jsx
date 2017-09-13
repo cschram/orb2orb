@@ -1,6 +1,12 @@
 import React from 'react';
 import fetch from 'isomorphic-fetch';
-import { currencies, thumbnails } from './constants';
+import {
+    currencies,
+    commonCurrencies,
+    breachCurrencies,
+    mapCurrencies,
+    thumbnails
+} from './constants';
 import './app.css';
 
 export default class App extends React.Component {
@@ -78,12 +84,25 @@ export default class App extends React.Component {
                 <header>
                     <h1>Path of Exile Currency Calculator</h1>
                     {this.state.result >= 0 ?
-                        <span className="result">Total Worth In Chaos: {this.state.result}</span> :
+                        <span className="result">Total Worth: <strong>{this.state.result} Chaos Orb(s)</strong></span> :
                         <button onClick={this.calculate}>
-                            {this.state.calculating ? 'Calculating...' : 'Calculate'}
+                            {this.state.calculating ?
+                                <span>Calculating <i className="fa fa-spinner" aria-hidden="true"></i></span> :
+                                <span>Calculate</span>}
                         </button>}
                 </header>
-                <ul className="inputs">{currencies.map(this.renderInput)}</ul>
+                <div className="input-section">
+                    <h2>Common Currencies</h2>
+                    <ul className="inputs">{commonCurrencies.map(this.renderInput)}</ul>
+                </div>
+                <div className="input-section">
+                    <h2>Map Currencies</h2>
+                    <ul className="inputs">{mapCurrencies.map(this.renderInput)}</ul>
+                </div>
+                <div className="input-section">
+                    <h2>Breach Currencies</h2>
+                    <ul className="inputs">{breachCurrencies.map(this.renderInput)}</ul>
+                </div>
             </div>
         );
     }
