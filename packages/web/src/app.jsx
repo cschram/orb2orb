@@ -7,6 +7,8 @@ import {
     mapCurrencies,
     thumbnails
 } from './constants';
+import Thumbnail from './thumbnail';
+import Select from './select';
 import './app.css';
 
 export default class App extends React.Component {
@@ -25,8 +27,10 @@ export default class App extends React.Component {
             }
         });
         this.state = {
+            exchangeTo: localStorage.getItem('exchangeTo') || 'Chaos Orb',
             values,
-            result: -1,
+            total: -1,
+            subtotals: {},
             calculating: false
         };
     }
@@ -38,25 +42,30 @@ export default class App extends React.Component {
         });
         localStorage.removeItem('values');
         this.setState({
+            exchangeTo: 'Chaos Orb',
             values,
-            result: -1,
+            total: -1,
+            subtotals: {},
             calculating: false
         });
     };
 
     calculate = async () => {
         this.setState({
+            exchangeTo: this.state.exchangeTo,
             values: this.state.values,
-            result: -1,
+            total: -1,
+            subtotals: {},
             calculating: true
         });
         const payload = {
-            currency: currencies.map(currency => {
+            from: currencies.map(currency => {
                 return {
                     name: currency,
                     value: this.state.values[currency]
                 };
-            })
+            }),
+            to: this.state.exchangeTo
         };
         const response = await fetch('/api/currency/calc', {
             method: 'POST',
@@ -66,13 +75,30 @@ export default class App extends React.Component {
             body: JSON.stringify(payload)
         });
         const data = await response.json();
+        const subtotals = {};
+        data.subtotals.forEach(subtotal => {
+            subtotals[subtotal.name] = subtotal.value;
+        });
         if (this.state.calculating) {
             this.setState({
+                exchangeTo: this.state.exchangeTo,
                 values: this.state.values,
-                result: data.total,
+                total: data.total,
+                subtotals,
                 calculating: false
             });
         }
+    };
+
+    handleSelectChange = (currency) => {
+        localStorage.setItem('exchangeTo', currency);
+        this.setState({
+            exchangeTo: currency,
+            values: this.state.values,
+            total: -1,
+            subtotals: {},
+            calculating: false
+        });
     };
 
     handleChange(currency) {
@@ -81,21 +107,41 @@ export default class App extends React.Component {
             values[currency] = parseInt(event.target.value, 10);
             localStorage.setItem('values', JSON.stringify(values));
             this.setState({
+                exchangeTo: this.state.exchangeTo,
                 values,
-                result: -1,
+                total: -1,
+                subtotals: {},
                 calculating: false
             });
         };
     }
 
-    renderInput = (currency) => {
-        const thumbnailStyle = {
-            backgroundImage: `url(${thumbnails[currency]})`
-        };
+    renderSelectValue = (currency) => {
         return (
-            <li key={currency}>
-                <h5>{currency}</h5>
-                <span className="thumbnail" title={currency} style={thumbnailStyle}></span>
+            <div className="currency-value">
+                <Thumbnail currency={currency} width={25} height={25} />
+                <span>{currency}</span>
+            </div>
+        );
+    };
+
+    renderSelectOption = (currency) => {
+        return (
+            <div className="currency-option">
+                <Thumbnail currency={currency} width={25} height={25} />
+                <span>{currency}</span>
+            </div>
+        );
+    };
+
+    renderInput = (currency) => {
+        return (
+            <li key={currency} className="currency-input">
+                <h4>{currency}</h4>
+                {this.state.total >= 0 ?
+                    <h5>{`${this.state.subtotals[currency].toFixed(2)} of total`}</h5> :
+                    null}
+                <Thumbnail currency={currency} />
                 <input type="number"
                        min="0"
                        step="1"
@@ -110,12 +156,19 @@ export default class App extends React.Component {
             <div className="app">
                 <header>
                     <h1>Path of Exile Currency Calculator</h1>
-                    {this.state.result >= 0 ?
-                        <span className="result">Total Worth: <strong>{this.state.result.toFixed(2)} Chaos Orb(s)</strong></span> :
+                    <h2>Convert To</h2>
+                    <Select value={this.state.exchangeTo}
+                            options={currencies}
+                            renderValue={this.renderSelectValue}
+                            renderOption={this.renderSelectOption}
+                            onChange={this.handleSelectChange} />
+                    <h2>Total</h2>
+                    {this.state.total >= 0 ?
+                        <span className="total">{this.state.total.toFixed(2)} {this.state.exchangeTo}(s)</span> :
                         <button onClick={this.calculate}>
                             {this.state.calculating ?
-                                <span>Calculating <i className="fa fa-spinner" aria-hidden="true"></i></span> :
-                                <span>Calculate</span>}
+                                <span>Converting <i className="fa fa-spinner" aria-hidden="true"></i></span> :
+                                <span>Convert</span>}
                         </button>}
                     <button className="clear" onClick={this.clear}>Clear</button>
                 </header>

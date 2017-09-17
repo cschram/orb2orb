@@ -51,19 +51,25 @@ body {
     padding: 0.5em;
 }
 
+.select {
+    margin-left: 0.75em;
+}
+
+.currency-value .thumbnail,
+.currency-option .thumbnail {
+    margin: 0.15em 0.5em;
+}
+
 .clear {
     float: right;
     margin-right: 1.75em;
 }
 
-.result {
+.total {
     display: inline-block;
     font-size: 1.25em;
-    padding: 0.5em 0.75em;
-}
-
-.result strong {
     font-weight: 800;
+    padding: 0.5em 0.75em;
 }
 
 .inputs {
@@ -79,18 +85,15 @@ body {
     width: 10em;
 }
 
-.inputs li h5 {
+.inputs li h4 {
+    font-size: 0.83em;
     line-height: 1.25em;
     margin: 0 0 0.5em 0;
 }
 
-.thumbnail {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    float: left;
-    height: 45px;
-    width: 45px;
+.inputs li h5 {
+    line-height: 1.25em;
+    margin: 0 0 0.5em 0;
 }
 
 .inputs li input {

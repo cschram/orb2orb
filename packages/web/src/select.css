@@ -1,0 +1,49 @@
+.select {
+    background: #000000;
+    border: 1px solid #444444;
+    display: inline-block;
+    height: 3em;
+    line-height: 2em;
+    padding: 0.4em 0;
+    position: relative;
+    width: 22em;
+}
+
+.select__value {
+    width: calc(100% - 2.4em);
+}
+
+.select__toggle {
+    float: right;
+    font-size: 1.5em;
+    height: 100%;
+    padding: 0.2em 0.6em;
+}
+
+.select__toggle .fa {
+    vertical-align: top;
+}
+
+.select__options {
+    background: #000000;
+    border: 1px solid #444444;
+    height: 40em;
+    list-style: none;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 0;
+    position: absolute;
+    top: 3em;
+    width: 100%;
+}
+
+.select__option {
+    border-bottom: 1px solid #444444;
+    cursor: pointer;
+    padding: 0.5em;
+}
+
+.select__option:hover {
+    background: #444444;
+}

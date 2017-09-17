@@ -1,5 +1,6 @@
 "use strict";
 const Hapi = require('hapi');
+const Boom = require('boom');
 const Joi = require('joi');
 const request = require('request');
 const loadConfig = require('./config');
@@ -54,24 +55,41 @@ if (!process.env.APP_CONFIG) {
             config: {
                 validate: {
                     payload: {
-                        currency: Joi.array().items({
+                        from: Joi.array().items({
                             name: Joi.string(),
                             value: Joi.number()
-                        })
+                        }),
+                        to: Joi.string()
                     }
                 }
             },
             async handler(request, reply) {
                 const rates = await getExchangeRates(config);
-                const total = request.payload.currency.reduce((total, currency) => {
-                    if (currency.name in rates) {
-                        return total + (currency.value * rates[currency.name]);
+                try {
+                    if (!(request.payload.to in rates)) {
+                        throw Boom.badRequest(`Invalid currency "${request.payload.to}`);
                     }
-                    return total;
-                }, 0);
-                reply({
-                    total
-                });
+                    const subtotals = request.payload.from.map(currency => {
+                        if (currency.name in rates) {
+                            return {
+                                name: currency.name,
+                                value: (currency.value * rates[currency.name]) / rates[request.payload.to]
+                            };
+                        } else {
+                            throw Boom.badRequest(`Invalid currency "${currency.name}"`)
+                        }
+                    });
+                    const total = subtotals.reduce((total, subtotal) => {
+                        return total + subtotal.value;
+                    }, 0);
+                    reply({
+                        total,
+                        subtotals
+                    });
+                } catch(error) {
+                    console.error(error);
+                    reply(error);
+                }
             }
         });
 
